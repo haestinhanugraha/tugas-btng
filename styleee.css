@@ -1,0 +1,551 @@
+@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Figtree:wght@400;600;700&display=swap");
+
+/* ============================================
+   TOKEN WARNA
+   Palet lama kamu + tambahan pastel pink, kuning, biru
+   ============================================ */
+:root {
+  /* dari kode kamu */
+  --cream: #fcf1cd;
+  --blush: #f7e3e7;
+  --purple: #4a148c;
+  --brown: #6b4e4a;
+  --brown-dark: #4a2e2b;
+  --berry: #e74464;
+  --sky: #c9e2ee;
+
+  /* pastel tambahan */
+  --pink: #ffc9dd;
+  --pink-soft: #fde4ee;
+  --yellow: #ffe58f;
+  --yellow-soft: #fff5c4;
+  --blue: #b8dff5;
+  --blue-soft: #def0fa;
+
+  --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --hero-veil: 0.88; /* turunkan (misal 0.7) kalau mau foto hero lebih kelihatan */
+
+  --font-display: "Bricolage Grotesque", "Segoe UI", Tahoma, sans-serif;
+  --font-body: "Figtree", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
+body {
+  color: var(--brown);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  background:
+    radial-gradient(circle at 8% 10%, rgba(255, 201, 221, 0.55), transparent 30%),
+    radial-gradient(circle at 94% 40%, rgba(184, 223, 245, 0.6), transparent 32%),
+    radial-gradient(circle at 12% 78%, rgba(255, 229, 143, 0.55), transparent 30%),
+    var(--cream);
+}
+
+:focus-visible {
+  outline: 3px solid var(--berry);
+  outline-offset: 3px;
+}
+
+/* ============================================
+   NAVBAR
+   ============================================ */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px 16px;
+  padding: 12px 24px;
+  color: var(--purple);
+  background: linear-gradient(
+    90deg,
+    rgba(255, 201, 221, 0.88),
+    rgba(255, 245, 196, 0.88),
+    rgba(184, 223, 245, 0.88)
+  );
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 6px 24px rgba(74, 20, 140, 0.12);
+}
+
+header div {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 22px;
+  letter-spacing: -0.02em;
+  cursor: default;
+}
+
+header div:hover {
+  animation: wiggle 0.6s var(--spring);
+}
+
+header nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+header nav a {
+  display: inline-block;
+  color: var(--purple);
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 999px;
+  transition: transform 0.3s var(--spring), background-color 0.2s;
+}
+
+header nav a:hover {
+  transform: translateY(-3px) rotate(-3deg);
+}
+
+header nav a:nth-child(3n + 1):hover { background-color: var(--pink); }
+header nav a:nth-child(3n + 2):hover { background-color: var(--yellow); }
+header nav a:nth-child(3n):hover     { background-color: var(--blue); }
+
+/* ============================================
+   HERO
+   ============================================ */
+#hero {
+  position: relative;
+  isolation: isolate;
+  padding: 130px 24px 120px;
+  text-align: center;
+  color: var(--brown-dark);
+  background: url("simplegoods.png") center / cover;
+  border-radius: 0 0 48px 48px;
+  overflow: hidden;
+}
+
+/* lapisan pastel yang bergerak pelan di atas foto */
+#hero::before {
+  content: "";
+  position: absolute;
+  inset: -25%;
+  z-index: -2;
+  opacity: var(--hero-veil);
+  background:
+    radial-gradient(circle at 20% 30%, var(--pink) 0, transparent 45%),
+    radial-gradient(circle at 80% 22%, var(--yellow) 0, transparent 45%),
+    radial-gradient(circle at 55% 88%, var(--blue) 0, transparent 50%),
+    #fdf3d8;
+  animation: mesh 14s ease-in-out infinite alternate;
+}
+
+/* gelembung putih yang melayang */
+#hero::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 6%;
+  bottom: -70px;
+  width: 240px;
+  height: 240px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 50% 40% 60% 45%;
+  animation:
+    float 7s ease-in-out infinite,
+    morph 9s ease-in-out infinite;
+}
+
+#hero > :not(.badge) {
+  position: relative;
+}
+
+#hero h1 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(2.5rem, 6.5vw, 4.8rem);
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+  max-width: 16ch;
+  margin: 0 auto;
+  color: var(--purple);
+  background: linear-gradient(90deg, var(--purple), var(--berry), #7c3aed, var(--purple));
+  background-size: 250% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 4px 0 rgba(255, 255, 255, 0.75));
+  animation:
+    rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both,
+    shine 5s linear infinite;
+}
+
+#hero p {
+  font-size: clamp(1rem, 2.2vw, 1.25rem);
+  max-width: 48ch;
+  margin: 18px auto 0;
+  animation: rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) 0.15s both;
+}
+
+/* BADGE PROMO */
+.badge {
+  position: absolute;
+  z-index: 3;
+  top: 20px;
+  right: 24px;
+  padding: 9px 18px;
+  background-color: var(--yellow);
+  color: var(--purple);
+  font-size: 14px;
+  font-weight: 800;
+  border-radius: 999px;
+  box-shadow: 0 6px 16px rgba(74, 20, 140, 0.2);
+  animation:
+    pop-in 0.7s var(--spring) 0.5s both,
+    wobble 3.2s ease-in-out 1.2s infinite;
+}
+
+/* cincin yang membesar lalu hilang, menarik mata ke promo */
+.badge::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 2px solid var(--berry);
+  animation: ping 2.4s ease-out 1.2s infinite;
+}
+
+/* ============================================
+   SECTION UMUM
+   ============================================ */
+section {
+  padding: 80px 24px;
+  text-align: center;
+}
+
+section h2 {
+  display: inline-block;
+  padding: 0 8px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  letter-spacing: -0.02em;
+  color: var(--purple);
+  /* garis stabilo kuning di belakang judul */
+  background: linear-gradient(transparent 56%, var(--yellow) 56%) no-repeat left bottom / 100% 100%;
+}
+
+section > p {
+  max-width: 60ch;
+  margin: 14px auto 0;
+}
+
+/* ============================================
+   MENU / PRODUK
+   ============================================ */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 30px;
+  max-width: 1100px;
+  margin: 48px auto 0;
+}
+
+.card {
+  background-color: var(--pink-soft);
+  border: 3px solid #fff;
+  border-radius: 28px;
+  padding: 16px 16px 24px;
+  text-align: center;
+  box-shadow:
+    0 4px 0 rgba(74, 20, 140, 0.08),
+    0 16px 30px rgba(74, 20, 140, 0.1);
+  transition: transform 0.45s var(--spring), box-shadow 0.3s ease;
+}
+
+.card:nth-child(3n + 2) { background-color: var(--blue-soft); }
+.card:nth-child(3n)     { background-color: var(--yellow-soft); }
+
+.card:hover {
+  transform: translateY(-12px) rotate(-1.5deg) scale(1.03);
+  box-shadow:
+    0 4px 0 rgba(74, 20, 140, 0.08),
+    0 28px 44px rgba(231, 68, 100, 0.22);
+}
+
+.card:nth-child(even):hover {
+  transform: translateY(-12px) rotate(1.5deg) scale(1.03);
+}
+
+.card img {
+  display: block;
+  width: 100%;
+  height: 260px;
+  object-fit: contain;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.7);
+  transition: transform 0.5s var(--spring);
+}
+
+.card:hover img {
+  transform: scale(1.08) rotate(3deg);
+}
+
+.card:nth-child(even):hover img {
+  transform: scale(1.08) rotate(-3deg);
+}
+
+.card-body {
+  padding: 0 6px;
+}
+
+.card-body h3 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 20px;
+  letter-spacing: -0.01em;
+  color: var(--brown-dark);
+  margin: 16px 0 6px;
+}
+
+.card-body p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--brown);
+}
+
+.card-body h4 {
+  display: inline-block;
+  margin-top: 14px;
+  padding: 6px 18px;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--purple);
+  background-color: #fff;
+  border-radius: 999px;
+  box-shadow: 0 4px 10px rgba(74, 20, 140, 0.12);
+}
+
+.card:hover .card-body h4 {
+  animation: bounce 0.6s var(--spring);
+}
+
+/* ============================================
+   TOMBOL CTA
+   ============================================ */
+.cta-btn {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  margin: 28px 25px 0;
+  padding: 15px 38px;
+  color: var(--purple);
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 800;
+  text-decoration: none;
+  border-radius: 999px;
+  cursor: pointer;
+  background: linear-gradient(120deg, var(--pink), var(--yellow), var(--blue), var(--pink));
+  background-size: 300% auto;
+  box-shadow: 0 8px 20px rgba(231, 68, 100, 0.25);
+  transition: transform 0.3s var(--spring);
+  animation:
+    drift 6s linear infinite,
+    pulse 2.6s ease-out infinite;
+}
+
+/* kilatan cahaya yang menyapu tombol saat di-hover */
+.cta-btn::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -80%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.75), transparent);
+  transform: skewX(-20deg);
+}
+
+.cta-btn:hover {
+  transform: scale(1.07) rotate(-2deg);
+}
+
+.cta-btn:hover::after {
+  left: 130%;
+  transition: left 0.6s ease;
+}
+
+.cta-btn:active {
+  transform: scale(0.95);
+}
+
+/* muncul bertahap bersama isi hero */
+#hero .cta-btn {
+  animation:
+    rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) 0.3s both,
+    drift 6s linear infinite,
+    pulse 2.6s ease-out 1.2s infinite;
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+footer {
+  padding: 36px 24px;
+  text-align: center;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--purple);
+  font-weight: 600;
+  border-radius: 40px 40px 0 0;
+  background: linear-gradient(90deg, var(--pink), var(--yellow), var(--blue), var(--pink));
+  background-size: 300% auto;
+  animation: drift 16s linear infinite;
+}
+
+/* ============================================
+   ANIMASI SAAT SCROLL
+   Kartu dan judul muncul ketika masuk layar.
+   Browser yang belum mendukung langsung menampilkan semuanya.
+   ============================================ */
+@supports (animation-timeline: view()) {
+  .card {
+    animation: card-in linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 55%;
+  }
+
+  section h2 {
+    animation: swipe linear both;
+    animation-timeline: view();
+    animation-range: entry 10% entry 70%;
+  }
+}
+
+/* ============================================
+   KEYFRAMES
+   ============================================ */
+@keyframes rise {
+  from { opacity: 0; translate: 0 26px; }
+  to   { opacity: 1; translate: 0 0; }
+}
+
+@keyframes shine {
+  to { background-position: 250% center; }
+}
+
+@keyframes drift {
+  to { background-position: 300% center; }
+}
+
+@keyframes mesh {
+  from { transform: translate3d(0, 0, 0) rotate(0deg) scale(1); }
+  to   { transform: translate3d(4%, -3%, 0) rotate(10deg) scale(1.12); }
+}
+
+@keyframes float {
+  0%, 100% { translate: 0 0; }
+  50%      { translate: 30px -40px; }
+}
+
+@keyframes morph {
+  0%, 100% { border-radius: 50% 40% 60% 45%; }
+  50%      { border-radius: 40% 60% 45% 55%; }
+}
+
+@keyframes pop-in {
+  from { opacity: 0; scale: 0.3; }
+  to   { opacity: 1; scale: 1; }
+}
+
+@keyframes wobble {
+  0%, 100% { rotate: 3deg; }
+  50%      { rotate: 9deg; }
+}
+
+@keyframes ping {
+  from { opacity: 0.8; transform: scale(1); }
+  to   { opacity: 0;   transform: scale(1.5, 1.9); }
+}
+
+@keyframes pulse {
+  0%   { box-shadow: 0 8px 20px rgba(231, 68, 100, 0.25), 0 0 0 0 rgba(231, 68, 100, 0.45); }
+  70%  { box-shadow: 0 8px 20px rgba(231, 68, 100, 0.25), 0 0 0 18px rgba(231, 68, 100, 0); }
+  100% { box-shadow: 0 8px 20px rgba(231, 68, 100, 0.25), 0 0 0 0 rgba(231, 68, 100, 0); }
+}
+
+@keyframes wiggle {
+  0%, 100% { rotate: 0deg; }
+  25%      { rotate: -6deg; }
+  50%      { rotate: 5deg; }
+  75%      { rotate: -3deg; }
+}
+
+@keyframes bounce {
+  0%, 100% { translate: 0 0; }
+  40%      { translate: 0 -8px; }
+}
+
+@keyframes card-in {
+  from { opacity: 0; translate: 0 70px; scale: 0.9; rotate: -3deg; }
+  to   { opacity: 1; translate: 0 0;    scale: 1;   rotate: 0deg; }
+}
+
+@keyframes swipe {
+  from { background-size: 0% 100%; }
+  to   { background-size: 100% 100%; }
+}
+
+/* ============================================
+   RESPONSIF
+   ============================================ */
+@media (max-width: 640px) {
+  header {
+    padding: 10px 16px;
+    justify-content: center;
+  }
+
+  #hero {
+    padding: 110px 20px 90px;
+    border-radius: 0 0 32px 32px;
+  }
+
+  .badge {
+    top: 14px;
+    right: 14px;
+    font-size: 13px;
+  }
+
+  section {
+    padding: 56px 20px;
+  }
+
+  .cta-btn {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
+/* Hormati pengguna yang mematikan animasi di perangkatnya */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
